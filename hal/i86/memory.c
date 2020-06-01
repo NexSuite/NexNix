@@ -169,7 +169,7 @@ void init_allocator(multiboot_info* bootinfo, uint32_t rd_end)
     num_blocks = (total_mem * 1024) / 4096;
     used_blocks = 0;
     mem_map = (uint32_t*)kmalloc(MEMMAP_SIZE);
-    memset(mem_map, 0xf, MEMMAP_SIZE);
+    memset(mem_map, 0xff, MEMMAP_SIZE);
     mmap_entry* mmap = (mmap_entry*)bootinfo->memMapAddress;
 	mmap_entry* mmap_end = (mmap_entry*)(bootinfo->memMapAddress + bootinfo->memMapLength);
     while(mmap < mmap_end)
@@ -180,7 +180,7 @@ void init_allocator(multiboot_info* bootinfo, uint32_t rd_end)
         }
         mmap = (mmap_entry*)((uint32_t)mmap + mmap->length + sizeof(mmap->length));
     }
-    deinit_region(0xC0000000, 0xC0800000);
+    deinit_region(0xC0000000, 0xFFFFFFFF);
     serial_printf("[pmm] PMM initialized.\r\n");
 }
 #endif

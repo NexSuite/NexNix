@@ -10,7 +10,7 @@
 #include <kernel/kernel.h>
 #include <kernel/system.h>
 #include <kernel/init.h>
-#include "../hal-i386.h"
+#include "../../hal-i386.h"
 #include "include/cpu.h"
 
 int cpu_init()

@@ -53,8 +53,6 @@ multiboot_info* get_boot_info()
 
 void kernel_init_thread()
 {
-    wait(5);
-    printf("Event triggered\n");
     for(;;) asm("pause");
 }
 

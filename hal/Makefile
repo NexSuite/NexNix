@@ -12,12 +12,14 @@ CFLAGS:=$(CFLAGS) -ffreestanding -Wall -I$(INCLUDEDIR) $(DEFINES)
 LIBS:=$(LIBS) -nostdlib -lgcc
 
 include $(HALARCHDIR)/make.config
+include $(HALSUBARCHDIR)/make.config
 
 HAL_OBJS=\
 		hal.o \
 
 OBJS=\
 		$(HAL_ARCH_OBJS) \
+		$(HAL_SUB_ARCH_OBJS) \
 		$(HAL_OBJS) \
 
 LINK_LIST=\

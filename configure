@@ -8,7 +8,8 @@ then
     export NASM_ARCH=elf32
     export QEMU_TYPE=i386
     export ARCHDIR=$HOME/NexNix/src/kernel/arch/i686
-    export HALARCHDIR=$HOME/NexNix/src/hal/i686
+    export HALARCHDIR=$HOME/NexNix/src/hal/i86
+    export HALSUBARCHDIR=$HOME/NexNix/src/hal/i86/i686
     export DEFINES=-DARCH_X86
     export AR=i686-elf-ar
     export CPP=i686-elf-g++

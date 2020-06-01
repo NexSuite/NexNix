@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <kernel/kernel.h>
 #include <kernel/system.h>
-#include "../hal-i386.h"
+#include "../../hal-i386.h"
 #include "include/gdt.h"
 #include "include/cpu.h"
 
