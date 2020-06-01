@@ -1,0 +1,4 @@
+create objmgr.a
+addlib vfsys/vfsys.a
+save
+end

@@ -1,0 +1,7 @@
+create klibs.a
+addlib ../hal/hal.a
+addlib ../Libc/libk.a
+addlib ../drivers/drivers.a
+addlib ../object_manager/objmgr.a
+save
+end

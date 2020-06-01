@@ -1,0 +1,15 @@
+sysroot
+serial.txt
+fs
+utils
+nexnix.img
+nexnix.iso
+tmp-klibs.a
+initrd.tar
+nexnix.img.lock
+snapshot.txt
+bochs.log
+debug.txt
+bochsrc.bxrc
+configure.ac
+hello.elf

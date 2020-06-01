@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -e
+
+echo "Creating GRUB disk image..."
+dd if=/dev/zero of=nexnix.img bs=516096c count=1000
+sudo parted --script nexnix.img mklabel msdos mkpart p ext2 1 20 set 1 boot on
+looppart=`sudo kpartx -l nexnix.img | awk -e '{ print $1; exit }'`
+loopdev=`sudo kpartx -l nexnix.img | awk -e '{ print $5; exit }'`
+sudo kpartx -a nexnix.img
+sleep 1
+sudo mkfs.vfat -F 32 /dev/mapper/$looppart
+mkdir fs
+sudo mount /dev/mapper/$looppart fs
+sudo grub-install --no-floppy --modules="biosdisk part_msdos configfile normal multiboot"  --root-directory=$HOME/NexNix/src/fs  $loopdev --target=i386-pc
+sudo umount fs
+sudo kpartx -d nexnix.img
+LOGNAME=`logname`
+LOGGROUP=`groups $LOGNAME` | awk '{print $3}'
+sudo chown $LOGNAME:$LOGGROUP -R fs nexnix.img
+rm -r fs
+echo "GRUB image created. Run with make run."

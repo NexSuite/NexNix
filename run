@@ -1,0 +1,4 @@
+#! /bin/bash
+
+tar -cvf initrd.tar test.txt
+qemu-system-i386 -boot d -kernel kernel/nexnix.kernel -initrd initrd.tar -vga std

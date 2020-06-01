@@ -1,0 +1,6 @@
+create drivers.a
+addlib terminal/terminal.a
+addlib serial/serial.a
+addlib parallel/parallel.a
+addlib video/video.a
+save

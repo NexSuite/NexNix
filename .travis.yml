@@ -1,0 +1,4 @@
+language: c
+    
+script:
+   . configure --arch=i686 && make -j4 && make clean

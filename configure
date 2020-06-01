@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# This script configures the Makefile
+if [ "$1" == "--arch=i686" ]
+then
+    export PATH="$HOME/opt/cross/i686/bin:$PATH"
+    export CC=i686-elf-gcc
+    export NASM_ARCH=elf32
+    export QEMU_TYPE=i386
+    export ARCHDIR=$HOME/NexNix/src/kernel/arch/i686
+    export HALARCHDIR=$HOME/NexNix/src/hal/i686
+    export DEFINES=-DARCH_X86
+    export AR=i686-elf-ar
+    export CPP=i686-elf-g++
+
+else
+    echo "Defaulting to i686"
+     export PATH="$HOME/opt/cross/i686/bin:$PATH"
+    export CC=i686-elf-gcc
+    export NASM_ARCH=elf32
+    export QEMU_TYPE=i386
+    export ARCHDIR=$HOME/NexNix/src/kernel/arch/i686
+    export HALARCHDIR=$HOME/NexNix/src/hal/i686
+    export DEFINES=-DARCH_X86
+    export AR=i686-elf-ar
+    export CPP=i686-elf-g++
+fi
+
+if [ "$3" == "--debug=minimal" ]
+then
+    export DEFINES=$DEFINES
+elif [ "$3" == "--debug=full" ]
+then
+    export DEFINES=$DEFINES
+    echo "Unable to used GDB right now"
+elif [ "$3" == "--debug=none" ]
+then
+    export DEFINES="$DEFINES -DNDEBUG"
+else
+    echo "No debug specified, defaulting to none"
+    export DEFINES="$DEFINES -DNDEBUG"
+fi
+echo "Completed with success"

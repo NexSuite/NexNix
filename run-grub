@@ -1,0 +1,23 @@
+#! /bin/bash
+
+set -e
+echo "Installing NexNix to Virtual Hard Disk..."
+looppart=`sudo kpartx -l nexnix.img | awk -e '{ print $1; exit }'`
+sudo kpartx -av nexnix.img
+sleep 3
+mkdir fs
+
+sudo mount /dev/mapper/$looppart fs
+
+sudo cp -r sysroot/* fs/
+sleep 2
+
+tar -cvf initrd.tar hello/hello.elf
+sudo cp initrd.tar fs/boot/initrd.tar
+sudo umount fs
+sudo kpartx -d nexnix.img
+LOGNAME=`logname`
+LOGGROUP=`groups $LOGNAME` | awk '{print $3}'
+sudo chown $LOGNAME:$LOGGROUP -R fs nexnix.img
+rm -r fs
+qemu-system-i386 -drive file=nexnix.img,format=raw
