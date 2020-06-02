@@ -1,0 +1,19 @@
+Features for version 0.0.0.4
+
+HAL
+    Add APIC and HPET
+    Add SSE copying
+    Improve paging code
+
+Kernel Memory Manager
+    Remove cache
+
+Scheduler
+    Add priority based scheduling
+    Improve scheduler API
+    Add ELF loader
+    Add locking mechanisims
+    Improve parent thread and proccess system
+
+Virtual Filesystem
+    Add file descriptors and open file protection
