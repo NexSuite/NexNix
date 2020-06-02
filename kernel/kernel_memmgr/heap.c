@@ -35,7 +35,7 @@ void init_kernel_heap()
     kernel_heap->num = 0;
 }
 
-void* kernel_heap_alloc(uint32_t size, int cache)
+void* kernel_heap_alloc(uint32_t size)
 {
     if(size < 1)
     {
@@ -89,15 +89,11 @@ void* kernel_heap_alloc(uint32_t size, int cache)
                   kernel_heap->size += size;
                   if(kernel_heap->size >= HEAP_MAX_SIZE)
                   {
-                      if(cache)
-                          kcache((void*)kernel_heap->heapLayout[kernel_heap->num].base, kernel_heap->heapLayout[kernel_heap->num].size);
-                      return (void*)-1;
+                      return (void*)0;
                   }
                   else if((HEAP_MAX_SIZE - kernel_heap->size) <= 0x100)
                   {
-                      if(cache)
-                          kcache((void*)kernel_heap->heapLayout[kernel_heap->num].base, kernel_heap->heapLayout[kernel_heap->num].size);
-                      return (void*)-1;
+                      return (void*)0;
                   }
                   return (void*)kernel_heap->heapLayout[kernel_heap->num].base;
              }
@@ -136,11 +132,6 @@ void kernel_heap_free(void* p)
     }
 }
 
-void* kernel_heap_alloc_cache_obj(uint32_t size)
-{
-    kernel_heap_alloc(size, 0);
-}
-
 uint32_t kmalloc_int(uint32_t sz, int align)
 {
     if(!is_heap_init)
@@ -154,7 +145,7 @@ uint32_t kmalloc_int(uint32_t sz, int align)
         address += sz;
         return ret;
     }
-    return (uint32_t)kernel_heap_alloc(sz, 1);
+    return (uint32_t)kernel_heap_alloc(sz);
 }
 
 uint32_t kmalloc_a(uint32_t sz)

@@ -66,6 +66,7 @@ typedef struct _process
     int threads[36];
     int num_used_threads;
     int pid;
+    uint32_t max_addr;
     int return_value;
     pdirectory* p_dir;
     uint32_t pdbr;

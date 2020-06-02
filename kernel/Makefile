@@ -20,7 +20,6 @@ kernel/panic.o \
 kernel/init.o \
 kernel/ustar.o \
 kernel_memmgr/heap.o \
-kernel_memmgr/cache.o \
 proc/loader.o \
 proc/sysapi.o \
 proc/queue.o \

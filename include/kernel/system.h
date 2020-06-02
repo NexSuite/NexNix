@@ -61,6 +61,7 @@ typedef uint32_t pde;
 
 #define PAGES_PER_TABLE 1024
 #define PAGES_PER_DIR	1024
+#define PAGE_SIZE 4096
 
 typedef struct _ptable {
 
@@ -84,6 +85,7 @@ void map_kernel(pdirectory* dir);
 void map_address_space(pdirectory* dest, pdirectory* src);
 void* get_physical_address (pdirectory* dir, uint32_t virt);
 void map_4mb_address(pdirectory* dir, uint32_t virt, uint32_t phys, uint32_t flags);
+void* alloc_page(pdirectory* dir, uint32_t virt, int is_user);
 
 #ifdef ARCH_X86
 typedef struct _regs

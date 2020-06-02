@@ -27,7 +27,6 @@ int init(multiboot_info* bootinfo, uint32_t magic)
     load_initrd(initrd[0].mod_end - initrd[0].mod_start);
     hal_init(bootinfo, 0);
     serial_write_string("[kmem] Starting kernel memory manager\r\n");
-    init_kernel_cache();
     init_kernel_heap();
     start_driver_framework();
     printf("Starting NexNix...\n");

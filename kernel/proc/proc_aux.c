@@ -37,3 +37,23 @@ char* get_working_directory(int tid)
 {
     return find_thread(tid)->working_dir;
 }
+
+void* sys_sbrk(int num)
+{
+    process* proc = find_proc(get_queue_front()->owning_pid);
+    void* block = alloc_page(get_directory(), proc->max_addr, 1);
+    proc->max_addr += PAGE_SIZE;
+    if(num == 1)
+        return block;
+    for(int i = 0; i <= (num - 1); i++)
+    {
+        alloc_page(get_directory(), proc->max_addr, 1);
+        proc->max_addr += 4096;
+    }
+    return block;
+}
+
+void* sys_brk()
+{
+    return sys_sbrk(1);
+}

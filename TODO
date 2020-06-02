@@ -2,14 +2,13 @@ Features for version 0.0.0.4
 
 HAL
     Add APIC and HPET
-    Add SSE copying
-    Improve paging code
+    Improve paging code - DONE
 
 Kernel Memory Manager
-    Remove cache
+    Remove cache - DONE
 
 Scheduler
-    Add priority based scheduling
+    Add pipes
     Improve scheduler API
     Add ELF loader
     Add locking mechanisims
