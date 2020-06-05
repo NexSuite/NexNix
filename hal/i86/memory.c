@@ -169,6 +169,7 @@ void init_allocator(multiboot_info* bootinfo, uint32_t rd_end)
     used_blocks = 0;
     mem_map = (uint32_t*)kmalloc(MEMMAP_SIZE);
     init_region(0x00000000, 0xFFFFFFFF);
-    deinit_region(0x00003000, 0x00FFF000);
+    deinit_region(0x00000000, 0x00001000);
+    deinit_region(0x000a0000, 0x00FFF000);
     serial_printf("[pmm] PMM initialized.\r\n");
 }
