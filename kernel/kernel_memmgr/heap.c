@@ -27,6 +27,7 @@ void init_kernel_heap()
     kernel_heap->base = HEAP_BASE;
     kernel_heap->magic = MAGIC;
     kernel_heap->heapLayout[0].magic = MAGIC;
+    serial_printf("got here\r\n");
     kernel_heap->heapLayout[0].base = HEAP_BASE;
     kernel_heap->heapLayout[0].size = 12;
     kernel_heap->heapLayout[0].isFree = 1;

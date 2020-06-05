@@ -57,6 +57,9 @@ void kernel_init_thread()
 
 void ithread()
 {
+    serial_printf("got here\r\n");
+    uint32_t* mem = alloc_block();
+    printf("%x\r\n", mem);
     for(;;);
 }
 

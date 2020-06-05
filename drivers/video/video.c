@@ -38,7 +38,6 @@ void video_data_init()
     for(int i = 0; i < size; i += 4096)
     {
         map_address(get_directory(), VID_BUFFER + i, vid_info.framebufferAddr + i, PTE_PRESENT | PTE_WRITEABLE);
-        map_address(get_kernel_directory(), VID_BUFFER + i, vid_info.framebufferAddr + i, PTE_PRESENT | PTE_WRITEABLE);
     }
     framebuffer = (uint32_t*)VID_BUFFER;
     for(uint32_t i = 0; i < vid_info.framebufferWidth * vid_info.framebufferHeight; i++)

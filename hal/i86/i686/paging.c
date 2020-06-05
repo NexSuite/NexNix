@@ -135,8 +135,9 @@ void vmm_init()
     serial_printf("[vmm] VMM initializing.\r\n");
     pdirectory* dir = (pdirectory*) alloc_block();
     ptable* table = (ptable*)alloc_block();
-    if (!dir)
+    if (!dir || !table)
         return;
+
     memset(dir, 0, sizeof (pdirectory));
     memset(table, 0, sizeof(ptable));
     pde* entry = &dir->entries[PAGE_DIRECTORY_INDEX (0xC0000000)];
