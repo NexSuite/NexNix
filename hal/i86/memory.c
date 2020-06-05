@@ -179,6 +179,6 @@ void init_allocator(multiboot_info* bootinfo, uint32_t rd_end)
         }
         mmap = (mmap_entry*)((uint32_t)mmap + mmap->length + sizeof(mmap->length));
     }
-    deinit_region(0xC0000000, 0xFFFFFFFF);
+    deinit_region(0x00100000, 0x00FFFFFF);
     serial_printf("[pmm] PMM initialized.\r\n");
 }
