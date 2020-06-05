@@ -4,7 +4,6 @@
     See LICENSE.md
 */
 
-#ifdef ARCH_X86
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
@@ -183,4 +182,3 @@ void init_allocator(multiboot_info* bootinfo, uint32_t rd_end)
     deinit_region(0xC0000000, 0xFFFFFFFF);
     serial_printf("[pmm] PMM initialized.\r\n");
 }
-#endif

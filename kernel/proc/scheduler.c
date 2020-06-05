@@ -66,6 +66,7 @@ thread* create_thread_int(void* thread_func, int owning_pid, int is_kernel, int 
     new->regs.esp = (uint32_t)new->stack;
     new->regs.ebp = (uint32_t)new->stack;
     process* parent = find_proc(owning_pid);
+    new->dir = parent->p_dir;
     parent->threads[++parent->num_used_threads] = new->tid;
     new->regs.cr3 = parent->pdbr;
     uint16_t cs = 0;
@@ -227,7 +228,7 @@ void scheduler_dispatch(regs* r)
     r->ebp = running->regs.ebp;
     r->eip = running->regs.eip;
     r->eflags = running->regs.eflags;
-    load_pd(running->regs.cr3);
+    switch_dir(running->dir);
 }
 
 void idle_thread()

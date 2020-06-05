@@ -63,6 +63,10 @@ typedef uint32_t pde;
 #define PAGES_PER_DIR	1024
 #define PAGE_SIZE 4096
 
+#define DIR_TEMP2_BASE 0xE0001000
+#define DIR_TEMP_BASE 0xE0002000
+#define DIR_KERNEL_BASE 0xE0003000
+
 typedef struct _ptable {
 
 	pte entries[PAGES_PER_TABLE];

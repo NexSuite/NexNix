@@ -87,6 +87,7 @@ int sys_event_broadcast(int event, int save)
     }
 
     asm("sti");
+    asm("int $32");         // Force a task switch
     return 0;
 }
 

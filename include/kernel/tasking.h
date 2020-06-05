@@ -53,6 +53,7 @@ typedef struct _thread
     uint32_t kernel_stack;
     int kernel_stack_size;
     int return_value;
+    pdirectory* dir;
     int first_run;
     int sleep_delta;
     char* working_dir;

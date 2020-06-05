@@ -24,7 +24,9 @@ void switch_dir(pdirectory* dir)
 
 void map_address_space(pdirectory* dest, pdirectory* src)
 {
-    memcpy(dest, src, sizeof(pdirectory));
+    map_address(get_directory(), DIR_TEMP_BASE, dest, PTE_PRESENT | PTE_WRITEABLE);
+    map_address(get_directory(), DIR_TEMP2_BASE, src, PTE_PRESENT | PTE_WRITEABLE);
+    memcpy((void*)DIR_TEMP_BASE, (void*)DIR_TEMP2_BASE, sizeof(pdirectory));
 }
 
 void delete_address_space(pdirectory* dir)
@@ -48,14 +50,16 @@ ptable* create_page_table (pdirectory* dir, uint32_t virt, uint32_t flags)
     ptable* table = (ptable*)alloc_block();
     if(!table)
         return 0;
-    memset(table, 0, sizeof(ptable));
     *e |= flags;
     pde_set_frame(e, (physical_addr)table);
-    return table;
+    return (ptable*)(0xFFC00000 + (PAGE_DIRECTORY_INDEX(virt) * 4096));
 }
 
-void map_address(pdirectory* dir, uint32_t virt, uint32_t phys, uint32_t flags)
+void map_address(pdirectory* dir_phys, uint32_t virt, uint32_t phys, uint32_t flags)
 {
+    pdirectory* temp = get_directory();
+    switch_dir(dir_phys);
+    pdirectory* dir = (pdirectory*)0xFFFFF000;
     pde* e = &dir->entries[PAGE_DIRECTORY_INDEX((uint32_t)virt)];
     ptable* table = 0;
     if((*e & PTE_PRESENT) != PTE_PRESENT)
@@ -64,13 +68,12 @@ void map_address(pdirectory* dir, uint32_t virt, uint32_t phys, uint32_t flags)
     }
     else
     {
-        table = pde_get_frame((uint32_t)*e);
+        table = (ptable*)(0xFFC00000 + (PAGE_DIRECTORY_INDEX(virt) * 4096));
     }
     pte* page = &table->entries[PAGE_TABLE_INDEX(virt)];
     *page |= flags;
     pte_set_frame(page, (uint32_t)phys);
-    if(dir == _cur_directory)
-        flush(virt);
+    switch_dir(temp);
 }
 
 void map_4mb_address(pdirectory* dir, uint32_t virt, uint32_t phys, uint32_t flags)
@@ -88,6 +91,7 @@ void* alloc_page(pdirectory* dir, uint32_t virt, int is_user)
         map_address(dir, virt, block, PTE_PRESENT | PTE_WRITEABLE);
     else
         map_address(dir, virt, block, PTE_PRESENT | PTE_WRITEABLE | PTE_USER);
+    return (void*)virt;
 }
 
 pdirectory* create_address_space()
@@ -95,13 +99,13 @@ pdirectory* create_address_space()
     pdirectory* dir = alloc_block();
     if(!dir)
         return 0;
-    //memset(dir, 0, sizeof(pdirectory));
     return dir;
 }
 
 void map_kernel(pdirectory* dir)
 {
-    memcpy(dir, kernel_directory, sizeof(pdirectory));
+    map_address(get_directory(), DIR_TEMP_BASE, dir, PTE_PRESENT | PTE_WRITEABLE);
+    memcpy(DIR_TEMP_BASE, DIR_KERNEL_BASE, sizeof(pdirectory));
 }
 
 void* get_physical_address (pdirectory* dir, uint32_t virt)
@@ -112,37 +116,67 @@ void* get_physical_address (pdirectory* dir, uint32_t virt)
     return (void*) ((uint32_t*) (pagedir[virt >> 22] & ~0xfff))[virt << 10 >> 10 >> 12];
 }
 
+void map_recursive(uint32_t virt, uint32_t phys, uint32_t flags)
+{
+    pdirectory* dir = (pdirectory*)0xFFFFF000;
+    uint32_t index = PAGE_DIRECTORY_INDEX(virt);
+    pde* entry = &dir->entries[index];
+    if((*entry & PDE_PRESENT) == PDE_PRESENT)
+    {
+        ptable* table = (ptable*)(0xFFC00000 + (index * 4096));
+        pte* table_entry = &table->entries[PAGE_TABLE_INDEX(virt)];
+        *table_entry |= flags;
+        pte_set_frame(table_entry, phys);
+    }
+}
+
 void vmm_init()
 {
     serial_printf("[vmm] VMM initializing.\r\n");
+    pdirectory* dir = (pdirectory*) alloc_block();
+    ptable* table = (ptable*)alloc_block();
+    if (!dir)
+        return;
+    memset(dir, 0, sizeof (pdirectory));
+    memset(table, 0, sizeof(ptable));
+    pde* entry = &dir->entries[PAGE_DIRECTORY_INDEX (0xC0000000)];
+    pde_add_attrib(entry, PDE_PRESENT);
+    pde_add_attrib(entry, PDE_WRITEABLE);
+    pde_add_attrib(entry, PDE_4MB);
+    pde_set_frame(entry, (uint32_t)0x0);
 
-   pdirectory* dir = (pdirectory*) alloc_block();
-   if (!dir)
-      return;
-    memset (dir, 0, sizeof (pdirectory));
-    pde* entry = &dir->entries [PAGE_DIRECTORY_INDEX (0xC0000000) ];
-    pde_add_attrib (entry, PDE_PRESENT);
-    pde_add_attrib (entry, PDE_WRITEABLE);
-    pde_add_attrib (entry, PDE_4MB);
-    pde_set_frame (entry, (uint32_t)0x0);
-	  pde* entry2 = &dir->entries [PAGE_DIRECTORY_INDEX (0xC0400000) ];
-    pde_add_attrib (entry2, PDE_PRESENT);
-    pde_add_attrib (entry2, PDE_WRITEABLE);
-    pde_add_attrib (entry2, PDE_4MB);
-    pde_set_frame (entry2, (uint32_t)0x400000);
+	pde* entry2 = &dir->entries[PAGE_DIRECTORY_INDEX (0xC0400000)];
+    pde_add_attrib(entry2, PDE_PRESENT);
+    pde_add_attrib(entry2, PDE_WRITEABLE);
+    pde_add_attrib(entry2, PDE_4MB);
+    pde_set_frame(entry2, (uint32_t)0x400000);
 
-    pde* entry3 = &dir->entries [PAGE_DIRECTORY_INDEX (0xC0800000) ];
-    pde_add_attrib (entry3, PDE_PRESENT);
-    pde_add_attrib (entry3, PDE_WRITEABLE);
-    pde_add_attrib (entry3, PDE_4MB);
-    pde_set_frame (entry3, (uint32_t)0x800000);
-    pde* entry4 = &dir->entries [PAGE_DIRECTORY_INDEX (0x00000000) ];
-    pde_add_attrib (entry4, PDE_PRESENT);
+    pde* entry3 = &dir->entries[PAGE_DIRECTORY_INDEX (0xC0800000)];
+    pde_add_attrib(entry3, PDE_PRESENT);
+    pde_add_attrib(entry3, PDE_WRITEABLE);
+    pde_add_attrib(entry3, PDE_4MB);
+    pde_set_frame(entry3, (uint32_t)0x800000);
+
+    pde* entry4 = &dir->entries [PAGE_DIRECTORY_INDEX (0x00000000)];
+    pde_add_attrib(entry4, PDE_PRESENT);
     pde_add_attrib (entry4, PDE_WRITEABLE);
     pde_add_attrib(entry4, PDE_4MB);
-    pde_set_frame (entry4, (uint32_t)0x0);
+    pde_set_frame(entry4, (uint32_t)0x0);
+
+    pde* entry5 = &dir->entries[1023];
+    pde_add_attrib(entry5, PDE_PRESENT);
+    pde_add_attrib(entry5, PDE_WRITEABLE);
+    pde_set_frame(entry5, dir);
+
+    pde* entry6 = &dir->entries[PAGE_DIRECTORY_INDEX(0x00400000)];
+    pde_add_attrib(entry6, PDE_PRESENT);
+    pde_add_attrib(entry6, PDE_WRITEABLE);
+    pde_set_frame(entry6, table);
+
     kernel_directory = dir;
-    switch_dir (dir);
+    switch_dir(dir);
     enable_paging();
+    //pde_del_attrib(entry4, PDE_PRESENT);
+    map_address(dir, DIR_KERNEL_BASE, kernel_directory, PTE_PRESENT | PTE_WRITEABLE);
     serial_printf("[vmm] VMM initialized.\r\n");
 }
