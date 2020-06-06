@@ -12,25 +12,42 @@
 #include <kernel/system.h>
 #include <kernel/terminal.h>
 #include <kernel/driver_core.h>
+#include <kernel/api.h>
 #include "terminal.h"
+
+int term_lock = 0;
 
 terminal_info term_info;
 
 void terminal_write_char(char c)
 {
+    sys_acquire(&term_lock);
     if(c == '\n')
     {
         term_info.row++;
         term_info.col = 0;
+        if(term_info.row == term_info.max_row)
+        {
+            video_scroll();
+            term_info.row = term_info.max_row - 1;
+            term_info.col = 0;
+        }
         return;
     }
     video_put_char(term_info.col * 8, term_info.row * 8, term_info.color, c);
     term_info.col++;
     if(term_info.col == term_info.max_col)
+    {
         term_info.row++;
         if(term_info.row == term_info.max_row)
-            term_info.row = 0;
-    video_swap_buffer();
+        {
+            video_scroll();
+            term_info.row = term_info.max_row;
+            term_info.col = 0;
+            return;
+        }
+    }
+    sys_release(&term_lock);
 }
 
 void terminal_print_string(char* s)

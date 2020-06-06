@@ -95,3 +95,13 @@ int sys_create_thread(void* func, void* data, int priority)
     thread* thread = create_thread(func, sys_get_pid(), 1, sys_get_tid(), 0, create_thread_stack());
     return thread->tid;
 }
+
+void sys_acquire(int* lock)
+{
+
+}
+
+void sys_release(int* lock)
+{
+    
+}

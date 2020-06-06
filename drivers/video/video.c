@@ -12,12 +12,15 @@
 #include <kernel/system.h>
 #include <kernel/multiboot.h>
 #include <kernel/driver_core.h>
+#include <kernel/api.h>
 #include "video.h"
 #include "font.h"
 
 multiboot_info* bootinfo = 0;
 video_info vid_info;
 uint32_t* framebuffer = 0;
+
+int vid_lock = 0;
 
 #define VID_BUFFER 0xA0000000
 
@@ -51,7 +54,9 @@ void video_data_init()
 
 void video_swap_buffer()
 {
+    sys_acquire(&vid_lock);
     memcpy(framebuffer, vid_info.backbuffer, vid_info.framebufferHeight * vid_info.framebufferWidth * (vid_info.framebufferBpp / 8));
+    sys_release(&vid_lock);
 }
 
 void video_put_pixel(int x, int y, uint32_t color)
@@ -93,10 +98,10 @@ void video_scroll()
         int i = 0;
         for(i = 0; i < vid_info.framebufferWidth * (vid_info.framebufferHeight - 1); i++)
         {
-            framebuffer[i] = framebuffer[i + vid_info.framebufferWidth];
+            vid_info.backbuffer[i] = vid_info.backbuffer[i + vid_info.framebufferWidth];
         }
         for(int i = vid_info.framebufferWidth * (vid_info.framebufferHeight - 1); i < vid_info.framebufferWidth * vid_info.framebufferHeight; i++)
-           framebuffer[i] = 0x000a3cc8;
+           vid_info.backbuffer[i] = 0x000a3cc8;
     }
 }
 

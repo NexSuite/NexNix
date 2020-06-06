@@ -11,6 +11,9 @@ int sys_fork(int tid);
 int sys_get_tid();
 int sys_get_pid();
 
+void sys_acquire(int* lock);
+void sys_release(int* lock);
+
 int sys_event_join(int event);
 int sys_event_find(int event);
 int sys_event_broadcast(int event, int save);

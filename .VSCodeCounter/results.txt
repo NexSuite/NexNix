@@ -1,16 +1,17 @@
-Date : 2020-05-21 14:01:12
+Date : 2020-06-06 09:18:40
 Directory : /home/nexware/NexNix/src
-Total : 107 files,  5484 codes, 508 comments, 1063 blanks, all 7055 lines
+Total : 106 files,  5444 codes, 466 comments, 1050 blanks, all 6960 lines
 
 Languages
 +-------------------------+------------+------------+------------+------------+------------+
 | language                | files      | code       | comment    | blank      | total      |
 +-------------------------+------------+------------+------------+------------+------------+
-| C                       |         42 |      2,984 |        288 |        439 |      3,711 |
-| C++                     |         37 |      1,207 |        214 |        280 |      1,701 |
+| C                       |         41 |      2,927 |        280 |        423 |      3,630 |
+| C++                     |         36 |      1,197 |        180 |        277 |      1,654 |
 | Markdown                |          3 |        587 |          0 |        132 |        719 |
-| Makefile                |         12 |        365 |          0 |        136 |        501 |
-| x86 and x86_64 Assembly |          8 |        320 |          6 |         70 |        396 |
+| Makefile                |         12 |        366 |          0 |        136 |        502 |
+| x86 and x86_64 Assembly |          8 |        319 |          6 |         70 |        395 |
+| LinkerScript            |          1 |         27 |          0 |          6 |         33 |
 | Properties              |          3 |         10 |          0 |          4 |         14 |
 | JSON with Comments      |          1 |          8 |          0 |          0 |          8 |
 | YAML                    |          1 |          3 |          0 |          2 |          5 |
@@ -20,34 +21,36 @@ Directories
 +---------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                          | files      | code       | comment    | blank      | total      |
 +---------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                             |        107 |      5,484 |        508 |      1,063 |      7,055 |
+| .                                                             |        106 |      5,444 |        466 |      1,050 |      6,960 |
 | .github                                                       |          1 |         30 |          0 |          9 |         39 |
 | .github/ISSUE_TEMPLATE                                        |          1 |         30 |          0 |          9 |         39 |
 | Libc                                                          |          8 |        456 |         42 |         80 |        578 |
 | Libc/stdio                                                    |          3 |        182 |         15 |         14 |        211 |
 | Libc/stdlib                                                   |          2 |         56 |         10 |         12 |         78 |
 | Libc/string                                                   |          2 |        180 |         17 |         40 |        237 |
-| drivers                                                       |         15 |        578 |        120 |        124 |        822 |
+| drivers                                                       |         15 |        586 |        120 |        124 |        830 |
 | drivers/parallel                                              |          3 |         62 |         10 |         23 |         95 |
-| drivers/serial                                                |          3 |         99 |         11 |         26 |        136 |
-| drivers/terminal                                              |          4 |        132 |         84 |         35 |        251 |
-| drivers/video                                                 |          4 |        268 |         15 |         35 |        318 |
+| drivers/serial                                                |          3 |        103 |         11 |         27 |        141 |
+| drivers/terminal                                              |          4 |        128 |         84 |         34 |        246 |
+| drivers/video                                                 |          4 |        276 |         15 |         35 |        326 |
 | grub                                                          |          2 |          9 |          0 |          3 |         12 |
-| hal                                                           |         30 |      1,487 |        112 |        271 |      1,870 |
-| hal/i686                                                      |         27 |      1,345 |        102 |        241 |      1,688 |
-| hal/i686/include                                              |          6 |        118 |         30 |         33 |        181 |
-| hello                                                         |          2 |         50 |          1 |         19 |         70 |
-| include                                                       |         23 |        767 |        144 |        201 |      1,112 |
-| include/kernel                                                |         11 |        610 |         84 |        134 |        828 |
+| hal                                                           |         30 |      1,480 |        111 |        261 |      1,852 |
+| hal/i86                                                       |         27 |      1,336 |        101 |        231 |      1,668 |
+| hal/i86/i686                                                  |         22 |        973 |         76 |        174 |      1,223 |
+| hal/i86/i686/include                                          |          5 |         99 |         25 |         27 |        151 |
+| hal/i86/include                                               |          1 |         19 |          5 |          6 |         30 |
+| hello                                                         |          2 |         51 |          0 |         19 |         70 |
+| include                                                       |         23 |        785 |        115 |        205 |      1,105 |
+| include/kernel                                                |         11 |        628 |         55 |        138 |        821 |
 | include/sys                                                   |          2 |         12 |         10 |         10 |         32 |
-| kernel                                                        |         17 |      1,350 |         84 |        195 |      1,629 |
-| kernel/arch                                                   |          1 |         60 |          6 |         15 |         81 |
-| kernel/arch/i686                                              |          1 |         60 |          6 |         15 |         81 |
-| kernel/driver                                                 |          1 |         58 |          5 |         10 |         73 |
-| kernel/kernel                                                 |          4 |        180 |         22 |         33 |        235 |
-| kernel/kernel_memmgr                                          |          4 |        341 |         20 |         38 |        399 |
-| kernel/kernel_memmgr/include                                  |          2 |         58 |         10 |         14 |         82 |
-| kernel/proc                                                   |          6 |        660 |         31 |         85 |        776 |
+| kernel                                                        |         16 |      1,290 |         73 |        188 |      1,551 |
+| kernel/arch                                                   |          2 |         87 |          6 |         21 |        114 |
+| kernel/arch/i686                                              |          2 |         87 |          6 |         21 |        114 |
+| kernel/driver                                                 |          1 |         60 |          5 |         10 |         75 |
+| kernel/kernel                                                 |          4 |        177 |         21 |         33 |        231 |
+| kernel/kernel_memmgr                                          |          2 |        183 |         10 |         21 |        214 |
+| kernel/kernel_memmgr/include                                  |          1 |         29 |          5 |          7 |         41 |
+| kernel/proc                                                   |          6 |        733 |         31 |         89 |        853 |
 | object_manager                                                |          3 |        160 |          5 |         27 |        192 |
 | object_manager/vfsys                                          |          2 |        143 |          5 |         22 |        170 |
 +---------------------------------------------------------------+------------+------------+------------+------------+------------+
@@ -76,61 +79,61 @@ Files
 | /home/nexware/NexNix/src/drivers/parallel/parallel.c          | C                       |         27 |          5 |          6 |         38 |
 | /home/nexware/NexNix/src/drivers/parallel/parallel.h          | C++                     |          6 |          5 |          5 |         16 |
 | /home/nexware/NexNix/src/drivers/serial/Makefile              | Makefile                |         29 |          0 |         12 |         41 |
-| /home/nexware/NexNix/src/drivers/serial/serial.c              | C                       |         65 |          6 |         10 |         81 |
+| /home/nexware/NexNix/src/drivers/serial/serial.c              | C                       |         69 |          6 |         11 |         86 |
 | /home/nexware/NexNix/src/drivers/serial/serial.h              | C++                     |          5 |          5 |          4 |         14 |
 | /home/nexware/NexNix/src/drivers/terminal/Makefile            | Makefile                |         30 |          0 |         12 |         42 |
-| /home/nexware/NexNix/src/drivers/terminal/terminal.c          | C                       |         47 |         74 |          9 |        130 |
+| /home/nexware/NexNix/src/drivers/terminal/terminal.c          | C                       |         43 |         74 |          8 |        125 |
 | /home/nexware/NexNix/src/drivers/terminal/terminal.h          | C++                     |         25 |          5 |          7 |         37 |
 | /home/nexware/NexNix/src/drivers/terminal/vga.c               | C                       |         30 |          5 |          7 |         42 |
 | /home/nexware/NexNix/src/drivers/video/Makefile               | Makefile                |         29 |          0 |         12 |         41 |
 | /home/nexware/NexNix/src/drivers/video/font.h                 | C++                     |        130 |          5 |          1 |        136 |
-| /home/nexware/NexNix/src/drivers/video/video.c                | C                       |         97 |          5 |         17 |        119 |
-| /home/nexware/NexNix/src/drivers/video/video.h                | C++                     |         12 |          5 |          5 |         22 |
+| /home/nexware/NexNix/src/drivers/video/video.c                | C                       |        104 |          5 |         17 |        126 |
+| /home/nexware/NexNix/src/drivers/video/video.h                | C++                     |         13 |          5 |          5 |         23 |
 | /home/nexware/NexNix/src/grub/grub-i386.cfg                   | Properties              |          5 |          0 |          2 |          7 |
 | /home/nexware/NexNix/src/grub/grub-x86_64.cfg                 | Properties              |          4 |          0 |          1 |          5 |
-| /home/nexware/NexNix/src/hal/Makefile                         | Makefile                |         35 |          0 |         16 |         51 |
+| /home/nexware/NexNix/src/hal/Makefile                         | Makefile                |         37 |          0 |         16 |         53 |
 | /home/nexware/NexNix/src/hal/hal-i386.h                       | C++                     |         86 |          5 |         10 |        101 |
 | /home/nexware/NexNix/src/hal/hal.c                            | C                       |         21 |          5 |          4 |         30 |
-| /home/nexware/NexNix/src/hal/i686/cmos.c                      | C                       |         47 |          5 |          8 |         60 |
-| /home/nexware/NexNix/src/hal/i686/cpu.c                       | C                       |         24 |          5 |          6 |         35 |
-| /home/nexware/NexNix/src/hal/i686/gdt.c                       | C                       |         40 |          5 |          5 |         50 |
-| /home/nexware/NexNix/src/hal/i686/gdt_flush.asm               | x86 and x86_64 Assembly |         13 |          0 |          2 |         15 |
-| /home/nexware/NexNix/src/hal/i686/idt.c                       | C                       |         44 |          5 |          7 |         56 |
-| /home/nexware/NexNix/src/hal/i686/idt_flush.asm               | x86 and x86_64 Assembly |          5 |          0 |          3 |          8 |
-| /home/nexware/NexNix/src/hal/i686/include/cmos.h              | C++                     |         19 |          5 |          6 |         30 |
-| /home/nexware/NexNix/src/hal/i686/include/cpu.h               | C++                     |          5 |          5 |          4 |         14 |
-| /home/nexware/NexNix/src/hal/i686/include/gdt.h               | C++                     |         19 |          5 |          7 |         31 |
-| /home/nexware/NexNix/src/hal/i686/include/idt.h               | C++                     |         19 |          5 |          5 |         29 |
-| /home/nexware/NexNix/src/hal/i686/include/paging.h            | C++                     |         23 |          5 |          6 |         34 |
-| /home/nexware/NexNix/src/hal/i686/include/tss.h               | C++                     |         33 |          5 |          5 |         43 |
-| /home/nexware/NexNix/src/hal/i686/io.c                        | C                       |         29 |          5 |          7 |         41 |
-| /home/nexware/NexNix/src/hal/i686/irq.c                       | C                       |         91 |          5 |         11 |        107 |
-| /home/nexware/NexNix/src/hal/i686/irq_stubs.asm               | x86 and x86_64 Assembly |         48 |          0 |          4 |         52 |
-| /home/nexware/NexNix/src/hal/i686/isr.c                       | C                       |        143 |          5 |          7 |        155 |
-| /home/nexware/NexNix/src/hal/i686/isr_stubs.asm               | x86 and x86_64 Assembly |        105 |          0 |          7 |        112 |
-| /home/nexware/NexNix/src/hal/i686/memory.c                    | C                       |        163 |          5 |         19 |        187 |
-| /home/nexware/NexNix/src/hal/i686/paging.c                    | C                       |        165 |          6 |         35 |        206 |
-| /home/nexware/NexNix/src/hal/i686/paging_internal.asm         | x86 and x86_64 Assembly |         19 |          0 |          5 |         24 |
-| /home/nexware/NexNix/src/hal/i686/pde.c                       | C                       |         36 |          5 |         10 |         51 |
-| /home/nexware/NexNix/src/hal/i686/pit.c                       | C                       |         32 |          6 |          7 |         45 |
-| /home/nexware/NexNix/src/hal/i686/pte.c                       | C                       |         28 |          5 |          8 |         41 |
-| /home/nexware/NexNix/src/hal/i686/regs.asm                    | x86 and x86_64 Assembly |         65 |          0 |         33 |         98 |
-| /home/nexware/NexNix/src/hal/i686/rtc.c                       | C                       |        100 |          5 |         17 |        122 |
-| /home/nexware/NexNix/src/hal/i686/tss.c                       | C                       |         25 |          5 |          6 |         36 |
-| /home/nexware/NexNix/src/hal/i686/tss_flush.asm               | x86 and x86_64 Assembly |          5 |          0 |          1 |          6 |
+| /home/nexware/NexNix/src/hal/i86/cmos.c                       | C                       |         47 |          5 |          8 |         60 |
+| /home/nexware/NexNix/src/hal/i86/i686/cpu.c                   | C                       |         24 |          5 |          6 |         35 |
+| /home/nexware/NexNix/src/hal/i86/i686/gdt.c                   | C                       |         40 |          5 |          5 |         50 |
+| /home/nexware/NexNix/src/hal/i86/i686/gdt_flush.asm           | x86 and x86_64 Assembly |         13 |          0 |          2 |         15 |
+| /home/nexware/NexNix/src/hal/i86/i686/idt.c                   | C                       |         44 |          5 |          7 |         56 |
+| /home/nexware/NexNix/src/hal/i86/i686/idt_flush.asm           | x86 and x86_64 Assembly |          5 |          0 |          3 |          8 |
+| /home/nexware/NexNix/src/hal/i86/i686/include/cpu.h           | C++                     |          5 |          5 |          4 |         14 |
+| /home/nexware/NexNix/src/hal/i86/i686/include/gdt.h           | C++                     |         19 |          5 |          7 |         31 |
+| /home/nexware/NexNix/src/hal/i86/i686/include/idt.h           | C++                     |         19 |          5 |          5 |         29 |
+| /home/nexware/NexNix/src/hal/i86/i686/include/paging.h        | C++                     |         23 |          5 |          6 |         34 |
+| /home/nexware/NexNix/src/hal/i86/i686/include/tss.h           | C++                     |         33 |          5 |          5 |         43 |
+| /home/nexware/NexNix/src/hal/i86/i686/io.c                    | C                       |         29 |          5 |          7 |         41 |
+| /home/nexware/NexNix/src/hal/i86/i686/irq.c                   | C                       |         91 |          5 |         11 |        107 |
+| /home/nexware/NexNix/src/hal/i86/i686/irq_stubs.asm           | x86 and x86_64 Assembly |         48 |          0 |          4 |         52 |
+| /home/nexware/NexNix/src/hal/i86/i686/isr.c                   | C                       |        145 |          5 |          7 |        157 |
+| /home/nexware/NexNix/src/hal/i86/i686/isr_stubs.asm           | x86 and x86_64 Assembly |        105 |          0 |          7 |        112 |
+| /home/nexware/NexNix/src/hal/i86/i686/paging.c                | C                       |        153 |          6 |         25 |        184 |
+| /home/nexware/NexNix/src/hal/i86/i686/paging_internal.asm     | x86 and x86_64 Assembly |         18 |          0 |          5 |         23 |
+| /home/nexware/NexNix/src/hal/i86/i686/pde.c                   | C                       |         36 |          5 |         10 |         51 |
+| /home/nexware/NexNix/src/hal/i86/i686/pte.c                   | C                       |         28 |          5 |          8 |         41 |
+| /home/nexware/NexNix/src/hal/i86/i686/regs.asm                | x86 and x86_64 Assembly |         65 |          0 |         33 |         98 |
+| /home/nexware/NexNix/src/hal/i86/i686/tss.c                   | C                       |         25 |          5 |          6 |         36 |
+| /home/nexware/NexNix/src/hal/i86/i686/tss_flush.asm           | x86 and x86_64 Assembly |          5 |          0 |          1 |          6 |
+| /home/nexware/NexNix/src/hal/i86/include/cmos.h               | C++                     |         19 |          5 |          6 |         30 |
+| /home/nexware/NexNix/src/hal/i86/memory.c                     | C                       |        153 |          5 |         19 |        177 |
+| /home/nexware/NexNix/src/hal/i86/pit.c                        | C                       |         45 |          5 |          7 |         57 |
+| /home/nexware/NexNix/src/hal/i86/rtc.c                        | C                       |         99 |          5 |         17 |        121 |
 | /home/nexware/NexNix/src/hello/Makefile                       | Makefile                |         31 |          0 |         14 |         45 |
-| /home/nexware/NexNix/src/hello/hello.c                        | C                       |         19 |          1 |          5 |         25 |
+| /home/nexware/NexNix/src/hello/hello.c                        | C                       |         20 |          0 |          5 |         25 |
 | /home/nexware/NexNix/src/include/assert.h                     | C++                     |         14 |          5 |          3 |         22 |
 | /home/nexware/NexNix/src/include/iso646.h                     | C++                     |         14 |          5 |          4 |         23 |
-| /home/nexware/NexNix/src/include/kernel/api.h                 | C++                     |          6 |          5 |          4 |         15 |
+| /home/nexware/NexNix/src/include/kernel/api.h                 | C++                     |         12 |          5 |          6 |         23 |
 | /home/nexware/NexNix/src/include/kernel/driver_core.h         | C++                     |         17 |          5 |          9 |         31 |
 | /home/nexware/NexNix/src/include/kernel/elf.h                 | C++                     |        172 |          5 |         24 |        201 |
 | /home/nexware/NexNix/src/include/kernel/event.h               | C++                     |         10 |          5 |          4 |         19 |
 | /home/nexware/NexNix/src/include/kernel/init.h                | C++                     |         23 |          5 |          6 |         34 |
-| /home/nexware/NexNix/src/include/kernel/kernel.h              | C++                     |         34 |          5 |          6 |         45 |
-| /home/nexware/NexNix/src/include/kernel/multiboot.h           | C++                     |         88 |         34 |         12 |        134 |
-| /home/nexware/NexNix/src/include/kernel/system.h              | C++                     |        101 |          5 |         19 |        125 |
-| /home/nexware/NexNix/src/include/kernel/tasking.h             | C++                     |         90 |          5 |         34 |        129 |
+| /home/nexware/NexNix/src/include/kernel/kernel.h              | C++                     |         36 |          5 |          7 |         48 |
+| /home/nexware/NexNix/src/include/kernel/multiboot.h           | C++                     |         89 |          5 |         11 |        105 |
+| /home/nexware/NexNix/src/include/kernel/system.h              | C++                     |        106 |          5 |         20 |        131 |
+| /home/nexware/NexNix/src/include/kernel/tasking.h             | C++                     |         94 |          5 |         35 |        134 |
 | /home/nexware/NexNix/src/include/kernel/terminal.h            | C++                     |         26 |          5 |          5 |         36 |
 | /home/nexware/NexNix/src/include/kernel/vfs.h                 | C++                     |         43 |          5 |         11 |         59 |
 | /home/nexware/NexNix/src/include/stdarg.h                     | C++                     |         13 |          0 |          6 |         19 |
@@ -143,25 +146,24 @@ Files
 | /home/nexware/NexNix/src/include/sys/io.h                     | C++                     |          8 |          5 |          6 |         19 |
 | /home/nexware/NexNix/src/include/sys/types.h                  | C++                     |          4 |          5 |          4 |         13 |
 | /home/nexware/NexNix/src/include/va_list.h                    | C++                     |         11 |          0 |          3 |         14 |
-| /home/nexware/NexNix/src/kernel/Makefile                      | Makefile                |         51 |          0 |         14 |         65 |
+| /home/nexware/NexNix/src/kernel/Makefile                      | Makefile                |         50 |          0 |         14 |         64 |
 | /home/nexware/NexNix/src/kernel/arch/i686/boot.asm            | x86 and x86_64 Assembly |         60 |          6 |         15 |         81 |
-| /home/nexware/NexNix/src/kernel/driver/driver.c               | C                       |         58 |          5 |         10 |         73 |
-| /home/nexware/NexNix/src/kernel/kernel/init.c                 | C                       |         50 |          6 |          9 |         65 |
+| /home/nexware/NexNix/src/kernel/arch/i686/link.ld             | LinkerScript            |         27 |          0 |          6 |         33 |
+| /home/nexware/NexNix/src/kernel/driver/driver.c               | C                       |         60 |          5 |         10 |         75 |
+| /home/nexware/NexNix/src/kernel/kernel/init.c                 | C                       |         47 |          5 |          9 |         61 |
 | /home/nexware/NexNix/src/kernel/kernel/kernel.c               | C                       |         24 |          6 |          3 |         33 |
 | /home/nexware/NexNix/src/kernel/kernel/panic.c                | C                       |          8 |          5 |          3 |         16 |
 | /home/nexware/NexNix/src/kernel/kernel/ustar.c                | C                       |         98 |          5 |         18 |        121 |
-| /home/nexware/NexNix/src/kernel/kernel_memmgr/cache.c         | C                       |        121 |          5 |          9 |        135 |
-| /home/nexware/NexNix/src/kernel/kernel_memmgr/heap.c          | C                       |        162 |          5 |         15 |        182 |
-| /home/nexware/NexNix/src/kernel/kernel_memmgr/include/cache.h | C++                     |         29 |          5 |          7 |         41 |
+| /home/nexware/NexNix/src/kernel/kernel_memmgr/heap.c          | C                       |        154 |          5 |         14 |        173 |
 | /home/nexware/NexNix/src/kernel/kernel_memmgr/include/heap.h  | C++                     |         29 |          5 |          7 |         41 |
-| /home/nexware/NexNix/src/kernel/proc/event.c                  | C                       |        121 |          5 |         20 |        146 |
+| /home/nexware/NexNix/src/kernel/proc/event.c                  | C                       |        136 |          5 |         17 |        158 |
 | /home/nexware/NexNix/src/kernel/proc/loader.c                 | C                       |        100 |          6 |         11 |        117 |
-| /home/nexware/NexNix/src/kernel/proc/proc_aux.c               | C                       |         28 |          5 |          7 |         40 |
-| /home/nexware/NexNix/src/kernel/proc/queue.c                  | C                       |        142 |          5 |         26 |        173 |
-| /home/nexware/NexNix/src/kernel/proc/scheduler.c              | C                       |        231 |          5 |         13 |        249 |
+| /home/nexware/NexNix/src/kernel/proc/proc_aux.c               | C                       |         80 |          5 |         13 |         98 |
+| /home/nexware/NexNix/src/kernel/proc/queue.c                  | C                       |        146 |          5 |         27 |        178 |
+| /home/nexware/NexNix/src/kernel/proc/scheduler.c              | C                       |        233 |          5 |         13 |        251 |
 | /home/nexware/NexNix/src/kernel/proc/sysapi.c                 | C                       |         38 |          5 |          8 |         51 |
 | /home/nexware/NexNix/src/object_manager/Makefile              | Makefile                |         17 |          0 |          5 |         22 |
 | /home/nexware/NexNix/src/object_manager/vfsys/Makefile        | Makefile                |         31 |          0 |         12 |         43 |
 | /home/nexware/NexNix/src/object_manager/vfsys/vfsys.c         | C                       |        112 |          5 |         10 |        127 |
-| Total                                                         |                         |      5,484 |        508 |      1,063 |      7,055 |
+| Total                                                         |                         |      5,444 |        466 |      1,050 |      6,960 |
 +---------------------------------------------------------------+-------------------------+------------+------------+------------+------------+

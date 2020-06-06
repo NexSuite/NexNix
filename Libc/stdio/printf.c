@@ -88,6 +88,7 @@ int printf(char* restrict str, ...)
             }
         }
     }
+    video_swap_buffer();
     va_end(list);
     return i;
 }
