@@ -16,10 +16,10 @@
 
 #define MEMMAP_SIZE 131072
 
-uint32_t* mem_map;
-uint32_t num_blocks;
-uint32_t total_mem;
-uint32_t used_blocks;
+uint32_t* mem_map = 0;
+uint32_t num_blocks = 0;
+uint32_t total_mem = 0;
+uint32_t used_blocks = 0;
 
 void mmap_set(int block)
 {
@@ -124,13 +124,13 @@ void* alloc_block()
     int frame = mmap_first_free();
     mmap_set(frame);
     used_blocks++;
-    int base = frame * 4096;
+    uint32_t base = frame * 4096;
     return (void*)base;
 }
 
 void free_block(void* p)
 {
-    int addr = (int)p;
+    uint32_t addr = (int)p;
     int frame = addr / 4096;
     mmap_unset(frame);
     used_blocks--;
@@ -148,13 +148,13 @@ void* alloc_blocks(int num)
     for(int i = 0; i < num; i++)
         mmap_set(frame + i);
     used_blocks += num;
-    int base = frame * 4096;
+    uint32_t base = frame * 4096;
     return (void*)base;
 }
 
 void free_blocks(void* p, int num)
 {
-    int base = (int)p;
+    uint32_t base = (uint32_t)p;
     int frame = base / 4096;
     for(int i = 0; i < num; i++)
         mmap_unset(frame + i);
@@ -170,6 +170,7 @@ void init_allocator(multiboot_info* bootinfo, uint32_t rd_end)
     mem_map = (uint32_t*)kmalloc(MEMMAP_SIZE);
     init_region(0x00000000, 0xFFFFFFFF);
     deinit_region(0x00000000, 0x00001000);
-    deinit_region(0x000a0000, 0x00FFF000);
+    deinit_region(0x000A0000, 0x00FFFFFF);
+    deinit_region(0xF0000000, 0xFFFFFFFF);
     serial_printf("[pmm] PMM initialized.\r\n");
 }

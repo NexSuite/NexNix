@@ -16,6 +16,7 @@ typedef struct _video_info
 	uint32_t framebufferWidth;
 	uint32_t framebufferHeight;
 	uint8_t framebufferBpp;
+    uint32_t* backbuffer;
 }video_info;
 
 #endif

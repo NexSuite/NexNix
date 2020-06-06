@@ -12,9 +12,9 @@
 #include <kernel/tasking.h>
 #include <kernel/multiboot.h>
 #include <kernel/vfs.h>
+#include <kernel/api.h>
 
 void kernel_init_thread();
-void event_thread();
 void ithread();
 
 multiboot_info* info = 0;
@@ -38,8 +38,6 @@ int init(multiboot_info* bootinfo, uint32_t magic)
     scheduler_init();
     serial_write_string("[kernel] System started successfully.\r\n");
     create_thread(kernel_init_thread, 1, 1, 1, 1, 0);
-    create_thread(event_thread, 1, 1, 2, 0, 0);
-    create_thread(ithread, 1, 1, 2, 0, 0);
     enable();
     return SUCCESS;
 }
@@ -52,18 +50,11 @@ multiboot_info* get_boot_info()
 
 void kernel_init_thread()
 {
+    int tid = sys_create_thread(ithread, 0, 0);
     for(;;) asm("pause");
 }
 
 void ithread()
-{
-    serial_printf("got here\r\n");
-    uint32_t* mem = alloc_block();
-    printf("%x\r\n", mem);
-    for(;;);
-}
-
-void event_thread()
 {
     for(;;) asm("pause");
 }

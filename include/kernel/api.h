@@ -17,6 +17,6 @@ int sys_event_broadcast(int event, int save);
 void sys_event_delete(int event);
 void sys_event_create(int event);
 
-
+int sys_create_thread(void* func, void* data, int priority);
 
 #endif

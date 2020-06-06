@@ -38,6 +38,7 @@ void video_put_char(int x, int y, uint32_t fg, char c);
 void video_put_string(int x, int y, uint32_t fg, char* s);
 uint32_t video_get_width();
 uint32_t video_get_height();
+void video_swap_buffer();
 
 void serial_driver_init();
 

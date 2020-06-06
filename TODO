@@ -1,18 +1,24 @@
 Features for version 0.0.0.4
 
 HAL
-    Add APIC and HPET
+    Improve PIC dirver and timing code
     Improve paging code - DONE
+    Fix memory manager - DONE
+    Add SSE copying
 
 Kernel Memory Manager
     Remove cache - DONE
 
+Drivers
+    Add double buffering and scrolling
+
 Scheduler
     Add pipes
-    Improve scheduler API
+    Improve scheduler API - DONE
     Add ELF loader
     Add locking mechanisims
     Improve parent thread and proccess system
 
 Virtual Filesystem
     Add file descriptors and open file protection
+    Improve VFS

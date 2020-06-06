@@ -73,6 +73,7 @@ typedef struct _process
     uint32_t pdbr;
     long long image_base;
     long long image_size;
+    uint32_t max_stack;
     struct _process* next;
 }process;
 

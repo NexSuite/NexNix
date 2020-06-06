@@ -124,6 +124,10 @@ char* messages[] = {
 
 void isr_handler(regs* reg)
 {
+    if(reg->eip < 0xC0000000)
+    {
+        destroy_thread(sys_get_tid(), 1);
+    }
     if(reg->int_no < 32 && reg->int_no != 14)
     {
         char* msg = messages[reg->int_no];
@@ -143,9 +147,7 @@ void isr_handler(regs* reg)
       if (rw) {printf("read-only ");}
       if (us) {printf("user-mode ");}
       if (reserved) {printf("reserved ");}
-      printf(") at 0x");
-      printf("%x", addr);
-      putchar('\n');
+      printf(") at 0x%x\n", addr);
       asm("cli");
       asm("hlt");
     }

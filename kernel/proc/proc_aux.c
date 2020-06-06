@@ -38,6 +38,31 @@ char* get_working_directory(int tid)
     return find_thread(tid)->working_dir;
 }
 
+void sys_chdir(char* dir)
+{
+    if(dir[0] != '/')
+    {
+        char* new_dir = get_working_directory(sys_get_tid());
+        strcat(new_dir, dir);
+        set_working_directory(sys_get_tid(), new_dir);
+    }
+    else
+    {
+        set_working_directory(sys_get_tid(), dir);
+    }
+}
+
+char* sys_getcwd(char* buf, size_t size)
+{
+    if(buf == 0)
+        return 0;
+    char* dir_buf = get_working_directory(sys_get_tid());
+    if(strlen(dir_buf) > size)
+        return 0;
+    strcpy(buf, dir_buf);
+    return buf;
+}
+
 void* sys_sbrk(int num)
 {
     process* proc = find_proc(get_queue_front()->owning_pid);
@@ -56,4 +81,17 @@ void* sys_sbrk(int num)
 void* sys_brk()
 {
     return sys_sbrk(1);
+}
+
+void* create_thread_stack()
+{
+    void* block = alloc_page(get_directory(), find_proc(get_queue_front()->owning_pid)->max_stack, 1);
+    find_proc(get_queue_front()->owning_pid)->max_stack += PAGE_SIZE;
+    return block;
+}
+
+int sys_create_thread(void* func, void* data, int priority)
+{
+    thread* thread = create_thread(func, sys_get_pid(), 1, sys_get_tid(), 0, create_thread_stack());
+    return thread->tid;
 }

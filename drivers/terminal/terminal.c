@@ -16,16 +16,12 @@
 
 terminal_info term_info;
 
-int using_text = 0;
-
 void terminal_write_char(char c)
 {
     if(c == '\n')
     {
         term_info.row++;
         term_info.col = 0;
-        if(term_info.row >= term_info.max_row)
-            video_scroll();
         return;
     }
     video_put_char(term_info.col * 8, term_info.row * 8, term_info.color, c);
@@ -34,8 +30,7 @@ void terminal_write_char(char c)
         term_info.row++;
         if(term_info.row == term_info.max_row)
             term_info.row = 0;
-    if(term_info.row >= term_info.max_row)
-        video_scroll();
+    video_swap_buffer();
 }
 
 void terminal_print_string(char* s)

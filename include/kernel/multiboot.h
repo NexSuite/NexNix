@@ -11,37 +11,8 @@
 
 #define MULTIBOOT_BOOTLOADER_MAGIC              0x2BADB002
 
-/*typedef struct _multiboot_info {
-
-	uint32_t flags;
-	uint32_t memLower;
-	uint32_t memUpper;
-	uint32_t bootDevice;
-	uint32_t commandLine;
-	uint32_t moduleCount;
-	uint32_t moduleAddress;
-	uint32_t syms[4];
-	uint32_t memMapLength;
-	uint32_t memMapAddress;
-	uint32_t drivesLength;
-	uint32_t drivesAddress;
-	uint32_t configTable;
-	uint32_t apmTable;
-	uint32_t vbeControlInfo;
-	uint32_t vbeModeInfo;
-	uint32_t vbeMode;
-	uint32_t vbeInterfaceSeg;
-	uint32_t vbeInterfaceOff;
-	uint32_t vbeInterfaceLength;
-	uint64_t framebufferAddr;
-	uint32_t framebufferPitch;
-	uint32_t framebufferWidth;
-	uint32_t framebufferHeight;
-	uint8_t framebufferBpp;
-	uint8_t framebufferType;
-}__attribute__((packed)) multiboot_info;*/
-
-typedef struct _multiboot_info{
+typedef struct _multiboot_info
+{
 	uint32_t flags;
 	uint32_t memLower;
 	uint32_t memUpper;

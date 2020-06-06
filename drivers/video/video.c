@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/io.h>
 #include <kernel/kernel.h>
 #include <kernel/system.h>
@@ -29,10 +30,11 @@ void video_data_init()
     vid_info.framebufferPitch = bootinfo->framebufferPitch;
     vid_info.framebufferWidth = bootinfo->framebufferWidth;
 
-    serial_printf("[video] Initializing screen with width %d, height %d, bpp %d, base addr %x\r\n",
-     vid_info.framebufferWidth, vid_info.framebufferHeight, vid_info.framebufferBpp, vid_info.framebufferAddr);
+    serial_printf("[video] Initializing screen with width %d, height %d, bpp %d, base addr 0x%x\r\n",
+            vid_info.framebufferWidth, vid_info.framebufferHeight, vid_info.framebufferBpp, vid_info.framebufferAddr);
 
     int size = vid_info.framebufferWidth * vid_info.framebufferHeight * (vid_info.framebufferBpp / 8);
+    vid_info.backbuffer = (uint32_t*)kmalloc(size);
     serial_printf("[video] Video memory size is %d bytes\r\n", size);
 
     for(int i = 0; i < size; i += 4096)
@@ -42,8 +44,14 @@ void video_data_init()
     framebuffer = (uint32_t*)VID_BUFFER;
     for(uint32_t i = 0; i < vid_info.framebufferWidth * vid_info.framebufferHeight; i++)
     {
-        framebuffer[i] = 0x000a3cc8;
+        vid_info.backbuffer[i] = 0x000a3cc8;
     }
+    video_swap_buffer();
+}
+
+void video_swap_buffer()
+{
+    memcpy(framebuffer, vid_info.backbuffer, vid_info.framebufferHeight * vid_info.framebufferWidth * (vid_info.framebufferBpp / 8));
 }
 
 void video_put_pixel(int x, int y, uint32_t color)
@@ -72,7 +80,7 @@ void video_put_char(int x, int y, uint32_t fg, char c)
 		{
 			if ((row & (1 << j)) >> j)
             {
-		        ((uint32_t*)framebuffer)[((y + i) * vid_info.framebufferWidth) + x + j] = fg;
+		        ((uint32_t*)vid_info.backbuffer)[((y + i) * vid_info.framebufferWidth) + x + j] = fg;
             }
 		}
 	}

@@ -128,6 +128,7 @@ process* create_process(pdirectory* p_dir, int parent_pid, uint32_t base, uint32
     new->return_value = 0;
     new->image_size = size;
     new->p_dir = p_dir;
+    new->max_stack = 0x400000;
     new->pdbr = (uint32_t)&p_dir->entries;
     if(parent_pid)
         new->parent = find_proc(parent_pid);
@@ -241,7 +242,7 @@ void scheduler_init()
     serial_printf("[scheduler] Scheduler intializing.\r\n");
     disable();
     init_queue();
-    create_process(get_kernel_directory(), 0, 0xC0000000, 0x20000000);
+    create_process(get_kernel_directory(), 0, 0xA0000000, 0x5FFFFFFF);
     thread* idle = create_thread_int(idle_thread, 1, 1, 0, 1, 0, 1);
     thread_idle = idle;
     irq_install_handler(0, scheduler_dispatch);
